@@ -5,7 +5,7 @@ import FontAwesome from 'react-fontawesome';
 
 class SearchBar extends Component {
     state = {
-        value: ''
+        value:''
     };
 
     timeout=null;

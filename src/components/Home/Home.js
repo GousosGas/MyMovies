@@ -29,14 +29,14 @@ class Home extends Component{
         let endpoint='';
         this.setState={
             movies:[],
-            loading:false,
-            searchTerm:searchTerm
+            loading:true,
+            searchTerm
         };
 
         if(searchTerm === ''){
             endpoint =`${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
         }else{
-            endpoint= `${API_URL}search/movie?api_key=${API_KEY}&language=en-US&query=${searchTerm}`;
+            endpoint=`${API_URL}search/movie?api_key=${API_KEY}&language=en-US&query=${searchTerm}`;
         }
 
         this.fetchItems(endpoint);
@@ -50,7 +50,7 @@ class Home extends Component{
         if(this.state.searchTerm === ''){
             endpoint =`${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=${this.state.currentPage}`;
         }else{
-            endpoint =`${API_URL}search/movie?api_key=${API_KEY}&language=en-US&query${this.state.searchTerm}$page=${this.state.searchTerm}`;
+            endpoint =`${API_URL}search/movie?api_key=${API_KEY}&language=en-US&query=${this.state.searchTerm}`;
         }
         this.fetchItems(endpoint)
     };
@@ -60,14 +60,15 @@ class Home extends Component{
         fetch(endpoint)
             .then(result => result.json())
             .then(result =>{
+                //console.log(result);
+
                this.setState({
                    movies:[...this.state.movies, ...result.results],
                    heroImage:this.state.heroImage || result.results[0],
                    loading:false,
                    currentPage:result.page,
                    totalPages:result.total_pages
-
-               });
+               })
             })
     };
 
